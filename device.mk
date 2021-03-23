@@ -5,6 +5,9 @@
 
 DEVICE_PATH := device/xiaomi/fleur
 
+# Dynamic Partitions
+PRODUCT_BUILD_SUPER_PARTITION := false
+
 # Shipping API level
 PRODUCT_SHIPPING_API_LEVEL := 30
 
