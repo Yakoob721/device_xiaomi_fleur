@@ -51,6 +51,7 @@ AB_OTA_POSTINSTALL_CONFIG += \
 
 # FastbootD
 PRODUCT_PACKAGES += \
+    android.hardware.fastboot-service.example_recovery \
     fastbootd
 
 # Health
