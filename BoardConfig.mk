@@ -68,7 +68,8 @@ BOARD_KERNEL_CMDLINE := \
     androidboot.serialconsole=0 \
     cgroup_disable=memory \
     log_buf_len=1024K \
-    vm.dirty_background_ratio=10
+    vm.dirty_background_ratio=10 \
+    cpuidle.governor=teo
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := fleur
