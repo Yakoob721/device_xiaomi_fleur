@@ -147,6 +147,7 @@ PRODUCT_COPY_FILES += \
 # WiFi
 PRODUCT_PACKAGES += \
     android.hardware.wifi-service \
+    wpa_supplicant \
     libwifi-hal-wrapper:64
 
 PRODUCT_COPY_FILES += \
