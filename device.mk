@@ -125,6 +125,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.connectivity.rc \
     init.mt6781.rc \
+    init.mt6781.thermal.rc \
     init.project.rc \
     init.sensor_1_0.rc \
     init.recovery.mt6781.rc \
@@ -154,6 +155,13 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.proximity.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.proximity.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepcounter.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepdetector.xml
+
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal-service.mediatek
+
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
 
 # WiFi
 PRODUCT_PACKAGES += \
