@@ -51,6 +51,8 @@ TARGET_KERNEL_SOURCE := kernel/xiaomi/mt6781
 TARGET_KERNEL_CONFIG := fleur_defconfig
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+
 # Platform
 TARGET_BOARD_PLATFORM := mt6781
 
