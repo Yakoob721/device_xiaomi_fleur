@@ -1045,3 +1045,7 @@ vendor/lib64/libksensor.so
 vendor/lib64/libsensor_custom.so
 vendor/lib64/librgbwlightsensor.so
 vendor/lib64/sensors.touch.detect.so
+
+# Keymaster
+vendor/bin/hw/android.hardware.keymaster@4.1-service.beanpod
+vendor/etc/init/android.hardware.keymaster@4.1-service.beanpod.rc
