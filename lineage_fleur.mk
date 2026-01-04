@@ -22,6 +22,13 @@ PRODUCT_MODEL := 2201117SY
 PRODUCT_SYSTEM_NAME := fleur_global
 PRODUCT_SYSTEM_DEVICE := fleur
 
+# LunarisAOSP Buid Flag
+
+TARGET_USES_OMNI_GAPPS :=true
+PERF_ANIM_OVERRIDE := true
+WITH_BCR := true
+
+
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildFingerprint=Redmi/fleur_global/fleur:13/SP1A.210812.016/V816.0.9.0.TKEMIXM:user/release-keys \
     SystemModel=$(PRODUCT_SYSTEM_DEVICE) \
