@@ -120,6 +120,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml
+# Audio Param
+    PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/audio/audio_param,$(TARGET_COPY_OUT_VENDOR)/etc/audio_param)
 
 # Bluetooth
 PRODUCT_PACKAGES += \
