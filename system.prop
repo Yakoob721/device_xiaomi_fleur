@@ -1,6 +1,10 @@
 # WiFi
 wifi.interface=wlan0
 wifi.supplicant_scan_interval=120
+persist.vendor.mims_support=2
+persist.vendor.mtk_dynamic_ims_switch=1
+persist.vendor.mtk_wfc_support=1
+persist.data.iwlan.enable=true
 
 LunarisAOSP Maintainer
 
