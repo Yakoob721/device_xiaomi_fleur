@@ -381,3 +381,4 @@ $(call inherit-product, vendor/xiaomi/fleur/fleur-vendor.mk)
 
 # ViPER4AndroidFX
 $(call inherit-product, packages/apps/ViPER4AndroidFX/config.mk)
+TARGET_INCLUDE_VIPERFX := true
