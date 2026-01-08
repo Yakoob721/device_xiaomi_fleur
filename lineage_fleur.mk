@@ -24,7 +24,7 @@ PRODUCT_SYSTEM_DEVICE := fleur
 
 # LunarisAOSP Buid Flag
 
-TARGET_USES_OMNI_GAPPS :=true
+TARGET_USES_CORE_GAPPS :=true
 PERF_ANIM_OVERRIDE := true
 WITH_BCR := true
 
