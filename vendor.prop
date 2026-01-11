@@ -132,6 +132,10 @@ persist.vendor.mtk_wfc_support=1
 persist.vendor.mtk.volte.enable=1
 persist.vendor.viwifi_support=1
 ro.vendor.mtk_data_config=1
+persist.vendor.mtk_epdg_support=1
+ro.vendor.mtk_epdg_support=1
+persist.vendor.mims_support=2
+persist.vendor.radio.wfc_menu_mode=2
 
 # LMK
 ro.lmk.kill_heaviest_task=true
