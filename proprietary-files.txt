@@ -1367,3 +1367,15 @@ vendor/firmware/WIFI_RAM_CODE_soc2_2_2a_1.bin|264394a9c720c5bb10b48ccc2443310006
 vendor/firmware/WMT_SOC.cfg|149755935ac3ab45e05288a227e7f42fdc941644
 vendor/firmware/soc2_2_ram_wifi_2_1_hdr.bin|c2aec4a0c8d4a19072a5920acb6d9316a04ac9fc
 vendor/firmware/soc2_2_ram_wifi_2a_1_hdr.bin|860dfe087f5d09bddfa6695829f853f042067975
+
+# IMS Libraries (System)
+system/lib64/libimsma.so
+system/lib64/libimsma_adapt.so
+system/lib64/libimsma_rtp.so
+system/lib64/libimsma_socketwrapper.so
+
+# ePDG and IPsec (Vendor)
+vendor/bin/charon
+vendor/bin/epdg_wod
+vendor/lib/libcharon-ss.so
+vendor/lib64/libcharon-ss.so
