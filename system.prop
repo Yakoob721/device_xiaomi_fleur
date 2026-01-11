@@ -4,18 +4,6 @@ wifi.supplicant_scan_interval=120
 
 persist.data.iwlan.enable=true
 
-# Enable MediaTek WFC (Wi-Fi Calling)
-persist.vendor.mtk_wfc_support=1
-persist.vendor.mtk_epdg_support=1
-ro.vendor.mtk_epdg_support=1
-
-# Tell the system to use the MWI/ePDG stack
-persist.vendor.mtk_dynamic_ims_switch=1
-persist.vendor.mims_support=2
-
-# Configure VoWiFi preference (1: Cellular Pref, 2: Wi-Fi Pref)
-persist.vendor.radio.wfc_menu_mode=2
-
 LunarisAOSP Maintainer
 
 ro.paranoid.maintainer=YAKOOB
