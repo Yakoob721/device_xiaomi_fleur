@@ -4,6 +4,3 @@ wifi.supplicant_scan_interval=120
 
 persist.data.iwlan.enable=true
 
-LunarisAOSP Maintainer
-
-ro.paranoid.maintainer=YAKOOB
