@@ -164,4 +164,22 @@
         <transport>hwbinder</transport>
         <fqname>@1.0::IVideoTelephony/default</fqname>
     </hal>
+
+    <hal format="hidl">
+        <name>vendor.mediatek.hardware.radio.ims</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IImsRadioIndication/imsIndication</fqname>
+        <fqname>@1.0::IImsRadioResponse/imsResponse</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>vendor.mediatek.hardware.radio_capability</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.1::IRadioCapability/default</fqname>
+    </hal>
+    <hal format="hidl">
+        <name>vendor.mediatek.hardware.imsa</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IImsa/default</fqname>
+    </hal>
+    
 </manifest>
