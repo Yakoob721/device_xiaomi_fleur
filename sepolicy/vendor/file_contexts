@@ -51,6 +51,20 @@
 /vendor/lib(64)?/vendor\.mediatek\.hardware\.mtkpower@1\.[0-9]\.so u:object_r:same_process_hal_file:s0
 /vendor/lib(64)?/libmtkperf_client_vendor\.so u:object_r:same_process_hal_file:s0
 
+# IMS (System libraries)
+/system/lib(64)?/libimsma\.so              u:object_r:system_file:s0
+/system/lib(64)?/libimsma_adapt\.so        u:object_r:system_file:s0
+/system/lib(64)?/libimsma_rtp\.so          u:object_r:system_file:s0
+/system/lib(64)?/libimsma_socketwrapper\.so u:object_r:system_file:s0
+
+# VoWiFi / ePDG
+/(vendor|system/vendor)/bin/charon         u:object_r:charon_exec:s0
+/(vendor|system/vendor)/bin/epdg_wod       u:object_r:epdg_wod_exec:s0
+/vendor/lib(64)?/libcharon-ss\.so          u:object_r:vendor_file:s0
+
+# IPsec (Data directory for VoWiFi tunnel)
+/data/vendor/ipsec(/.*)?                   u:object_r:ipsec_vendor_data_file:s0
+
 # Fingerprint
 /(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint-service\.xiaomi u:object_r:hal_fingerprint_default_exec:s0
 /data/vendor/fpc(/.*)? u:object_r:fingerprint_data_file:s0
