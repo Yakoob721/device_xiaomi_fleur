@@ -17,3 +17,8 @@ allow charon vendor_file:file execute_no_trans;
 
 # Allow communication with the radio/modem
 unix_socket_connect(charon, rild, rild)
+
+# Allow charon to see the modem status
+allow charon sysfs_boot_mode:file r_file_perms;
+# Allow charon to use the kernel IPsec (XFRM)
+allow charon self:netlink_xfrm_socket create_socket_perms_no_ioctl;
