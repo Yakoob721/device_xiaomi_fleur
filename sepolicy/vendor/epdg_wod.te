@@ -15,3 +15,6 @@ allow epdg_wod self:netlink_route_socket nlmsg_write;
 
 # Allow interaction with charon
 allow epdg_wod charon:process signal;
+
+# Allow epdg_wod to talk to the property service
+set_prop(epdg_wod, vendor_mtk_ctl_epdg_prop)
