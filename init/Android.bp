@@ -86,3 +86,11 @@ prebuilt_etc {
     src: "ueventd.rc",
     vendor: true,
 }
+
+prebuilt_etc {
+    name: "init.wod.rc",
+    src: "init.wod.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
