@@ -227,7 +227,8 @@ PRODUCT_PACKAGES += \
     init.recovery.mt6781.rc \
     ueventd.mt6781.rc \
     fstab.mt6781 \
-    fstab.mt6781.ramdisk
+    fstab.mt6781.ramdisk \
+    init.wod.rc
 
 # Keymaster
 PRODUCT_PACKAGES += \
