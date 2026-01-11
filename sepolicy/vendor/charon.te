@@ -1,0 +1,19 @@
+type charon, domain;
+type charon_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(charon)
+
+# Allow charon to use network sockets and manage IPsec
+allow charon self:capability { net_admin net_raw dac_override };
+allow charon self:udp_socket create_socket_perms_no_ioctl;
+allow charon self:netlink_route_socket nlmsg_write;
+
+# Allow charon to manage its data directory for security keys
+allow charon ipsec_vendor_data_file:dir create_dir_perms;
+allow charon ipsec_vendor_data_file:file create_file_perms;
+
+# Allow access to its support library
+allow charon vendor_file:file execute_no_trans;
+
+# Allow communication with the radio/modem
+unix_socket_connect(charon, rild, rild)
