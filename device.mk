@@ -384,3 +384,19 @@ $(call inherit-product, vendor/xiaomi/fleur/fleur-vendor.mk)
 # ViPER4AndroidFX
 $(call inherit-product, packages/apps/ViPER4AndroidFX/config.mk)
 
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += device/xiaomi/fleur/framework_compatibility_matrix.xml
+
+# Create a symlink so the RIL finds libmtk-rilop.so
+PRODUCT_COPY_FILES += \
+    vendor/xiaomi/fleur/proprietary/vendor/lib64/libmtk-ril.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmtk-rilop.so
+
+# Security Certificates
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/security/cacerts,$(TARGET_COPY_OUT_SYSTEM)/etc/security/cacerts) \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/security/cacerts_google,$(TARGET_COPY_OUT_SYSTEM)/etc/security/cacerts_google) \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/security/fsverity,$(TARGET_COPY_OUT_SYSTEM)/etc/security/fsverity) \
+    $(LOCAL_PATH)/security/otacerts.zip:$(TARGET_COPY_OUT_SYSTEM)/etc/security/otacerts.zip
+
+PRODUCT_COPY_FILES += \
+    device/xiaomi/fleur/permissions/android.software.telephony.calling.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.telephony.calling.xml \
+    device/xiaomi/fleur/permissions/android.software.telephony.ims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.telephony.ims.xml

@@ -2,4 +2,4 @@
 type spidev_device, dev_type;
 
 # VoWiFi / IPsec Data
-type ipsec_vendor_data_file, file_type, data_file_type, vendor_data_file_type;
+type ipsec_vendor_data_file, file_type, data_file_type;

@@ -11,7 +11,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/xiaomi/fleur/device.mk)
 
 # Inherit some common LineageOS stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+$(call inherit-product, vendor/infinity/config/common_full_phone.mk)
 
 PRODUCT_NAME := lineage_fleur
 PRODUCT_DEVICE := fleur
@@ -23,15 +23,12 @@ PRODUCT_SYSTEM_NAME := fleur_global
 PRODUCT_SYSTEM_DEVICE := fleur
 
 
-# Axion stuff
+PERF_ANIM_OVERRIDE := true
 
-AXION_MAINTAINER := Yakoob
-AXION_PROCESSOR := MT6781_Helio_G96
-# Camera
-AXION_CAMERA_REAR_INFO := 64,8,2
-AXION_CAMERA_FRONT_INFO := 16
-#V4A
-TARGET_INCLUDE_VIPERFX := true
+# Infinity Flags
+INFINITY_MAINTAINER := YAKOOB
+TARGET_SUPPORTS_BLUR := false
+WITH_GAPPS := true
 
 
 PRODUCT_BUILD_PROP_OVERRIDES += \

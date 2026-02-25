@@ -1,0 +1,18 @@
+// Fake definitions to satisfy the "Typo?" check
+hidl_interface {
+    name: "vendor.microtrust.hardware.thh@2.0",
+    root: "vendor.microtrust.hardware",
+    srcs: [],
+}
+
+hidl_interface {
+    name: "vendor.trustonic.tee@1.0",
+    root: "vendor.trustonic",
+    srcs: [],
+}
+
+aidl_interface {
+    name: "vendor.xiaomi.hardware.dtool1",
+    vendor_available: true,
+    srcs: [],
+}

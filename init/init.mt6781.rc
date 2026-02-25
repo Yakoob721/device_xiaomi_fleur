@@ -886,3 +886,12 @@ service batterysecret /vendor/bin/batterysecret
     user root
     group system system wakelock
     disabled
+
+service wfca /vendor/bin/hw/wfca
+    class main
+    user system
+    group radio net_admin net_raw system wakelock
+    socket wfca stream 660 system system
+    # Add these two lines to grant high-level networking/power permissions:
+    capabilities NET_ADMIN NET_RAW BLOCK_SUSPEND
+    

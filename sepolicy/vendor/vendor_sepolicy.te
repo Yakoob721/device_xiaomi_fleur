@@ -1,0 +1,51 @@
+# =========================================================
+# 1. Type Declarations
+# =========================================================
+type vendor_charon, domain;
+type vendor_charon_exec, exec_type, vendor_file_type, file_type;
+
+type vendor_epdg_wod, domain;
+type vendor_epdg_wod_exec, exec_type, vendor_file_type, file_type;
+
+# =========================================================
+# 2. Charon (IPsec) Rules
+# =========================================================
+init_daemon_domain(vendor_charon)
+
+# Capabilities: Removed dac_override to pass Neverallow check
+allow vendor_charon self:capability { net_admin net_raw };
+
+# Network permissions
+allow vendor_charon self:udp_socket create_socket_perms_no_ioctl;
+allow vendor_charon self:netlink_route_socket nlmsg_write;
+allow vendor_charon self:netlink_xfrm_socket create_socket_perms_no_ioctl;
+
+# Data Directory Access
+# We use wod_ipsec_conf_file and wod_apn_conf_file because 
+# those are defined in the MediaTek common tree (device/mediatek/...)
+allow vendor_charon wod_ipsec_conf_file:dir create_dir_perms;
+allow vendor_charon wod_ipsec_conf_file:file create_file_perms;
+allow vendor_charon wod_apn_conf_file:dir r_dir_perms;
+allow vendor_charon wod_apn_conf_file:file r_file_perms;
+
+# Misc permissions
+allow vendor_charon vendor_file:file execute_no_trans;
+unix_socket_connect(vendor_charon, rild, rild)
+allow vendor_charon sysfs_boot_mode:file r_file_perms;
+
+# =========================================================
+# 3. EPDG_WOD Rules
+# =========================================================
+init_daemon_domain(vendor_epdg_wod)
+
+# Capabilities: Removed dac_override to pass Neverallow check
+allow vendor_epdg_wod self:capability { net_admin };
+
+# Communication
+allow vendor_epdg_wod self:udp_socket create_socket_perms_no_ioctl;
+allow vendor_epdg_wod self:netlink_route_socket nlmsg_write;
+allow vendor_epdg_wod vendor_charon:process signal;
+
+# Property Access: Using get_prop and vendor_default_prop 
+# to stay within security boundaries and avoid build failures.
+get_prop(vendor_epdg_wod, vendor_default_prop)

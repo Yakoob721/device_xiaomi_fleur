@@ -245,3 +245,18 @@ ro.vendor.wifi.sap.interface=ap0
 ro.zram.mark_idle_delay_mins=60
 ro.zram.first_wb_delay_mins=180
 ro.zram.periodic_wb_delay_hours=24
+
+# Disable Operator RIL loading
+persist.vendor.radio.mtk_ril_op_enabled=0
+ro.vendor.mtk_ril_op_libs=0
+vendor.rild.libpath=/vendor/lib64/libmtk-ril.so
+persist.vendor.mtk_wfc_support=1
+persist.vendor.entitlement_check=0
+
+persist.vendor.net.epdg_do_not_validate_cert=1
+persist.vendor.net.epdg_not_support_ipv6=0
+persist.vendor.net.epdg_do_not_validate_cert=1
+persist.vendor.net.epdg_not_support_ipv6=0
+persist.vendor.ims_support_omadm=1
+vendor.wo.support.wfc=1
+persist.vendor.mtk.wfc.mode=1

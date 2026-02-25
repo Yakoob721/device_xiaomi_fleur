@@ -3,4 +3,38 @@ wifi.interface=wlan0
 wifi.supplicant_scan_interval=120
 
 persist.data.iwlan.enable=true
+# Force the system to recognize the VoWiFi capability
+persist.vendor.mtk.wfc.enable=1
+persist.vendor.mtk.wfc.mode=1
+persist.vendor.ims_support_omadm=1
+# Fix for the "cannot find match socket context" error
+persist.vendor.mtk_wfc_support=1
 
+# Disable the entitlement requirement
+persist.vendor.mtk.wfc.entitlement=0
+persist.sys.entitlement_check=0
+ro.vendor.mtk_wfc_entitlement=0
+
+# Force UI and Service to "Ready"
+persist.dbg.wfc_avail_ovr=1
+persist.vendor.mtk_wfc_support=1
+persist.vendor.mtk.wfc.enable=1
+vendor.wo.support.wfc=1
+
+# Bypass the "Disabled Carriers" block
+ro.gwfcactivation.disabled_carriers=0
+
+#InfinityX
+ro.product.marketname=Poco M4 Pro
+ro.infinity.soc=MT6781 Helio G96
+ro.infinity.battery=5000 mAh
+ro.infinity.display=2400 x 1080, 90 Hz
+ro.infinity.camera=64MP + 8MP + 2MP
+
+
+# Force IMS to wait for SIM ready
+persist.vendor.ims_support_omadm=1
+persist.vendor.mtk.volte.enable=1
+persist.vendor.mtk.wfc.enable=1
+# Help with the subId -1 issue
+ril.subscription.types=NV,RUIM

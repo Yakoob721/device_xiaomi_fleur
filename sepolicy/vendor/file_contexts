@@ -60,14 +60,21 @@
 # VoWiFi / ePDG
 /(vendor|system/vendor)/bin/charon         u:object_r:charon_exec:s0
 /(vendor|system/vendor)/bin/epdg_wod       u:object_r:epdg_wod_exec:s0
+
+# IPsec Data (Commented to resolve conflict with wod_ipsec_conf_file from MTK common)
+# /data/vendor/ipsec(/.*)?                               u:object_r:ipsec_vendor_data_file:s0
 /vendor/lib(64)?/libcharon-ss\.so          u:object_r:vendor_file:s0
 
+
 # IPsec (Data directory for VoWiFi tunnel)
-/data/vendor/ipsec(/.*)?                   u:object_r:ipsec_vendor_data_file:s0
+# /data/vendor/ipsec(/.*)?                    u:object_r:ipsec_vendor_data_file:s0
 
 # Fingerprint
 /(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint-service\.xiaomi u:object_r:hal_fingerprint_default_exec:s0
 /data/vendor/fpc(/.*)? u:object_r:fingerprint_data_file:s0
+
+/vendor/bin/charon  u:object_r:vendor_charon_exec:s0
+/vendor/bin/epdg_wod  u:object_r:vendor_epdg_wod_exec:s0
 /data/vendor/fpdump(/.*)? u:object_r:fingerprint_data_file:s0
 /data/vendor/goodix(/.*)? u:object_r:fingerprint_data_file:s0
 
@@ -88,3 +95,7 @@
 
 # Vibrator
 /(vendor|system/vendor)/bin/hw/vendor\.qti\.hardware\.vibrator\.service\.fleur u:object_r:hal_vibrator_default_exec:s0
+
+/sys/power/wake_lock    u:object_r:sysfs_wake_lock:s0
+/sys/power/wake_unlock  u:object_r:sysfs_wake_lock:s0
+/dev/socket/wfca    u:object_r:wfca_socket:s0

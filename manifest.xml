@@ -181,5 +181,7 @@
         <transport>hwbinder</transport>
         <fqname>@1.0::IImsa/default</fqname>
     </hal>
-    
+	<feature name="android.software.telephony.calling" />
+	<feature name="android.software.telephony.ims" />
+	<feature name="android.hardware.telephony.ims" />    
 </manifest>

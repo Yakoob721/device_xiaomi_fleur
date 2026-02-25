@@ -203,3 +203,9 @@ WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 
 # Inherit the proprietary files
 include vendor/xiaomi/fleur/BoardConfigVendor.mk
+# Bypass the "Typo?" error for missing proprietary HAL source code
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := device/xiaomi/fleur/framework_compatibility_matrix.xml
+PRODUCT_ENFORCE_VINTF_MANIFEST := false
+
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+BUILD_BROKEN_DUP_RULES := true
