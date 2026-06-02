@@ -20,3 +20,23 @@ ro.vendor.vt. u:object_r:vendor_mtk_radio_prop:s0
 vendor.mtk.ctl.epdg       u:object_r:vendor_default_prop:s0
 vendor.mtk.radio          u:object_r:vendor_default_prop:s0
 vendor.sys.thermal.     u:object_r:vendor_thermal_engine_prop:s0
+
+vendor.mtk.           u:object_r:vendor_mtk_common_prop:s0
+ro.vendor.mtk.        u:object_r:vendor_mtk_common_prop:s0
+# Specific fix for the chipname property you saw in logcat
+ro.hardware.chipname  u:object_r:vendor_mtk_common_prop:s0
+
+vendor.mtk.ctl.epdg_wod    u:object_r:vendor_mtk_ctl_epdg_wod_prop:s0
+# persist.vendor.dbg.ims_avail  u:object_r:vendor_ims_dbg_prop:s0
+
+vendor.mtk.ctl.charon    u:object_r:vendor_mtk_ctl_charon_prop:s0
+
+# Wi-Fi Calling (WFC) & VoWiFi Explicit Mappings
+# persist.vendor.mtk.wfc.enable   u:object_r:vendor_mtk_wfc_prop:s0
+
+# Uncomment and fix the WOD property prefix
+vendor.mtk.wod.                 u:object_r:vendor_mtk_wod_prop:s0
+persist.vendor.mtk.wod.         u:object_r:vendor_mtk_persist_wod_prop:s0
+
+
+

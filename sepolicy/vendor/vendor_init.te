@@ -6,3 +6,13 @@ set_prop(vendor_init, vendor_camera_prop)
 set_prop(vendor_init, vendor_mtk_audiohal_prop)
 set_prop(vendor_init, vendor_mtk_audio_prop)
 set_prop(vendor_init, vendor_fp_prop)
+
+# Allow vendor_init to enable VoWiFi support properties
+set_prop(vendor_init, vendor_mtk_wod_prop)
+
+# Allow vendor_init to handle common MTK props
+set_prop(vendor_init, vendor_mtk_common_prop)
+set_prop(vendor_init, vendor_ims_dbg_prop)
+
+# Allow vendor_init to set the Wi-Fi Calling activation properties
+set_prop(vendor_init, vendor_mtk_wfc_prop)

@@ -38,3 +38,6 @@ persist.vendor.mtk.volte.enable=1
 persist.vendor.mtk.wfc.enable=1
 # Help with the subId -1 issue
 ril.subscription.types=NV,RUIM
+
+bluetooth.profile.a2dp.sink.enabled=true
+persist.bluetooth.gabeldorsche=false

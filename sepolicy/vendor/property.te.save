@@ -1,3 +1,4 @@
+device/xiaomi/fleur/sepolicy/vendor/property.te
 vendor_public_prop(vendor_thermal_engine_prop)
 vendor_restricted_prop(vendor_camera_prop)
 vendor_internal_prop(vendor_camera_persist_prop)
@@ -6,6 +7,3 @@ vendor_public_prop(vendor_mtk_common_prop)
 vendor_internal_prop(vendor_mtk_ctl_epdg_wod_prop)
 vendor_public_prop(vendor_ims_dbg_prop)
 vendor_internal_prop(vendor_mtk_ctl_charon_prop)
-type vendor_radio_prop, property_type, vendor_property_type;
-
-# type vendor_ims_wfc_prop, property_type;

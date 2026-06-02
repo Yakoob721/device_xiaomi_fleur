@@ -1,52 +1,30 @@
-# Allow wfca to use the socket created by init
-allow wfca wfca_socket:sock_file rw_file_perms;
-# Allow wfca to create the IPsec tunnel
-allow wfca self:capability { net_admin net_raw };
-allow wfca self:udp_socket create_socket_perms;
+# ==============================================================================
+# WFCA (Wi-Fi Calling Agent) Unified Custom Permissions
+# ==============================================================================
 
-# No "type wfca" line here! It's already defined elsewhere.
+# --- Hardware & Modem Interaction ---
+allow wfca ccci_device:chr_file rw_file_perms;
+unix_socket_connect(wfca, rild, rild)
+
+# --- Process & Framework Sockets ---
+# Socket created by init / used by the IMS framework handover logic
+allow wfca wfca_socket:sock_file { create_file_perms rw_file_perms };
+allow wfca self:unix_stream_socket create_socket_perms_no_ioctl;
+
+# --- Networking, IPsec Tunneling & Packet Marking ---
 allow wfca self:capability { net_admin net_raw };
 allow wfca self:udp_socket { create ioctl relabelfrom relabelto };
-
-allow wfca self:capability { net_admin net_raw };
-allow wfca self:udp_socket { create ioctl relabelfrom relabelto };
+allowxperm wfca self:udp_socket ioctl { 0x8914 0x8916 0x8922 }; # Explicit MTK VoWiFi ioctls
 allow wfca node:udp_socket node_bind;
+
+# --- Network Daemon (Netd) & Firewall Marking (fwmark) ---
+allow wfca fwmarkd_socket:sock_file write;
 allow wfca netd:unix_stream_socket connectto;
+
+# --- Inter-process Data Handover ---
 # Allow wfca to use file descriptors passed from the modem/radio
 allow wfca radio:fd use;
-allow wfca self:capability net_admin;
 
-# Allow wfca to create and use the secure IPsec sockets
-allow wfca self:udp_socket { create ioctl relabelfrom relabelto };
-allow wfca node:udp_socket node_bind;
-
-# Allow communication with the networking daemon
-allow wfca netd:unix_stream_socket connectto;
-
-# Permissions to fix the "open lock fail" error in your log
+# --- Power Management (Fixes "open lock fail" errors) ---
 allow wfca sysfs_wake_lock:file rw_file_perms;
 allow wfca self:capability2 block_suspend;
-
-# Additional IMS/WFC permissions often needed
-allow wfca self:udp_socket create_socket_perms_no_ioctl;
-allow wfca node:udp_socket node_bind;
-
-# Allow wfca to create and use its own socket
-allow wfca self:unix_stream_socket { create_socket_perms_no_ioctl };
-allow wfca fwmarkd_socket:sock_file write;
-allow wfca netd:unix_stream_socket connectto;
-
-# Allow wfca to communicate with the RIL
-unix_socket_connect(wfca, rild, rild)
-# Allow wfca to mark packets (SO_MARK) for the IPsec tunnel
-allow wfca self:capability { net_admin net_raw };
-allow wfca self:udp_socket { create ioctl relabelfrom relabelto };
-allow wfca node:udp_socket node_bind;
-
-# Allow wfca to use the system power management (wakelocks)
-allow wfca sysfs_wake_lock:file rw_file_perms;
-allow wfca self:capability2 block_suspend;
-
-# Allow wfca to interact with netd for network routing
-allow wfca netd:unix_stream_socket connectto;
-allow wfca fwmarkd_socket:sock_file write;

@@ -1,0 +1,25 @@
+# 1. Declare the types
+type hal_telephony_default, domain;
+type hal_telephony_default_exec, exec_type, vendor_file_type, file_type;
+
+# 2. Assign the domain
+init_daemon_domain(hal_telephony_default)
+
+# (Removed legacy HIDL hal_ims_client link to fix crDroid compilation)
+
+# 4. Use permissive for debugging
+permissive hal_telephony_default;
+
+# 5. Grant property permissions
+get_prop(hal_telephony_default, vendor_mtk_common_prop)
+
+# 6. Generic permissions
+allow hal_telephony_default self:capability { net_admin net_raw };
+allow hal_telephony_default radio_service:service_manager find;
+
+# NEW: Allow communication with Binder and System Server
+# This fixes the "skipping notification" and SIM tracking issues
+allow hal_telephony_default servicemanager:binder { call transfer };
+allow hal_telephony_default system_server:binder { call transfer };
+allow hal_telephony_default hwservicemanager:binder { call transfer };
+allow hal_telephony_default hwservicemanager_prop:file { read getattr open };

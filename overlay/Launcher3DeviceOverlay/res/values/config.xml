@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <integer name="max_depth_blur_radius">11</integer>
+    <dimen name="max_depth_blur_radius_enhanced">15dp</dimen>
+
+    <item name="config_wallpaper_scale_to" format="float" type="dimen">0.85</item>
+    
+    <integer name="config_overview_transition_duration">320</integer>
+
+    <string name="config_recents_velocity_tracker" translatable="false">com.android.quickstep.util.ActiveGestureLog</string>
+</resources>

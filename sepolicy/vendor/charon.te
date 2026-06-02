@@ -1,0 +1,49 @@
+# =========================================================
+# 1. Capabilities
+# =========================================================
+allow vendor_charon self:capability { net_admin net_raw setuid setgid };
+allow vendor_charon self:capability2 block_suspend;
+
+# =========================================================
+# 2. File Access (Data Partition)
+# =========================================================
+allow vendor_charon wod_ipsec_conf_file:dir { read write add_name remove_name search open getattr };
+allow vendor_charon wod_ipsec_conf_file:file { read write create getattr unlink open };
+
+allow vendor_charon wod_apn_conf_file:dir { read search open getattr };
+allow vendor_charon wod_apn_conf_file:file { read getattr open };
+
+allow vendor_charon vendor_configs_file:dir r_dir_perms;
+allow vendor_charon vendor_configs_file:file r_file_perms;
+allow vendor_charon sysfs_wake_lock:file rw_file_perms;
+
+# =========================================================
+# 3. Networking
+# =========================================================
+allow vendor_charon self:udp_socket create_socket_perms;
+allow vendor_charon self:tun_socket { create relabelfrom relabelto };
+
+allowxperm vendor_charon self:udp_socket ioctl { 0x8913 0x8915 0x891c };
+
+allow vendor_charon self:netlink_route_socket { create bind read write getattr setattr getopt setopt nlmsg_read nlmsg_write };
+allow vendor_charon self:netlink_xfrm_socket { create bind read write getattr setattr getopt setopt nlmsg_read nlmsg_write };
+
+allow vendor_charon netd:unix_stream_socket connectto;
+allow vendor_charon fwmarkd_socket:sock_file write;
+
+unix_socket_connect(vendor_charon, rild, rild)
+
+set_prop(vendor_charon, vendor_mtk_network_prop)
+get_prop(vendor_charon, vendor_default_prop)
+
+
+# Allow Charon to be managed by epdg_wod
+allow vendor_charon vendor_epdg_wod:fd use;
+allow vendor_charon vendor_epdg_wod:unix_stream_socket { read write connectto };
+
+# Network access for handshake
+allow vendor_charon self:udp_socket create_socket_perms_no_ioctl;
+allow vendor_charon self:netlink_xfrm_socket { create_socket_perms_no_ioctl nlmsg_write };
+
+# Access to security configs
+allow vendor_charon wod_ipsec_conf_file:file r_file_perms;

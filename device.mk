@@ -283,6 +283,7 @@ PRODUCT_ENFORCE_RRO_TARGETS := *
 PRODUCT_PACKAGES += \
     CarrierConfigOverlayFleur \
     FrameworkOverlayFleur \
+    Launcher3DeviceOverlay \
     TetheringOverlayFleur \
     SettingsOverlayFleur \
     SystemUIOverlayFleur \
@@ -400,3 +401,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/xiaomi/fleur/permissions/android.software.telephony.calling.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.telephony.calling.xml \
     device/xiaomi/fleur/permissions/android.software.telephony.ims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.telephony.ims.xml
+
+
+$(call inherit-product, vendor/bcr/bcr.mk)
+TARGET_DISABLE_WINDOW_BLURS := true
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.mtk.wfc.enable=1 \
+    persist.vendor.mims_support=2 \
+    persist.dbg.wfc_avail=1 \
+    persist.dbg.ims_avail=1
+
+# Copy the entire ipsec.d directory (configs and certificates)
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,device/xiaomi/fleur/ipsec.d,$(TARGET_COPY_OUT_VENDOR)/etc/ipsec/ipsec.d)

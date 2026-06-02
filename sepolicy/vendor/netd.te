@@ -1,0 +1,3 @@
+# From your dump: Allow netd to use epdg_wod file descriptors
+allow netd vendor_epdg_wod:fd use;
+allow netd vendor_epdg_wod:{ tcp_socket udp_socket } { read write getopt setopt };
