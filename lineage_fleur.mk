@@ -11,7 +11,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/xiaomi/fleur/device.mk)
 
 # Inherit some common LineageOS stuff.
-$(call inherit-product, vendor/infinity/config/common_full_phone.mk)
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 PRODUCT_NAME := lineage_fleur
 PRODUCT_DEVICE := fleur
@@ -25,8 +25,6 @@ PRODUCT_SYSTEM_DEVICE := fleur
 
 PERF_ANIM_OVERRIDE := true
 
-# Infinity Flags
-INFINITY_MAINTAINER := YAKOOB
 TARGET_SUPPORTS_BLUR := false
 WITH_GAPPS := true
 
