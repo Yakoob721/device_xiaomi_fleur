@@ -260,3 +260,9 @@ persist.vendor.net.epdg_not_support_ipv6=0
 persist.vendor.ims_support_omadm=1
 vendor.wo.support.wfc=1
 persist.vendor.mtk.wfc.mode=1
+
+# Fix ePDG IPv6 tunnel routing over IPv4 Wi-Fi networks
+persist.vendor.net.epdg.ip_version=46
+persist.vendor.radio.data.iwlan=1
+persist.vendor.net.wifi.vowifi.report=1
+

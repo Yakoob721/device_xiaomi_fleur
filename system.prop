@@ -41,3 +41,29 @@ ril.subscription.types=NV,RUIM
 
 bluetooth.profile.a2dp.sink.enabled=true
 persist.bluetooth.gabeldorsche=false
+
+
+# Enable IWLAN (VoWiFi) support in telephony framework
+ro.telephony.iwlan_operation_mode=default
+
+# Force framework to turn on VoWiFi and IMS features
+persist.vendor.mims_support=2
+persist.sys.ims_support=1
+persist.vendor.ims_support=1
+persist.vendor.mtk_wfc_support=1
+
+# Audio routing fixes for IMS calls
+persist.vendor.audio.voice.sound.path=1
+
+persist.vendor.audio.voip.custom_scene=Default
+persist.vendor.audio.vowifi.custom_scene=Default
+
+persist.vendor.net.wo.ifname=wo0
+persist.vendor.mtk.epdg.interface=wo0
+persist.vendor.net.wo.support=1
+persist.vendor.mtk_wfc_support=1
+
+# Fix ePDG IPv6 tunnel routing over IPv4 Wi-Fi networks
+persist.vendor.net.epdg.ip_version=46
+persist.vendor.radio.data.iwlan=1
+persist.vendor.net.wifi.vowifi.report=1

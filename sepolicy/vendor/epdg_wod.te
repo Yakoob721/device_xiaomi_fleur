@@ -1,90 +1,122 @@
 # ==============================================================================
-# EPDG_WOD (Modem Tunnel Daemon) Unified SEPolicy
+# EPDG_WOD (Modem Tunnel Daemon) Fully Restored Unified SEPolicy
 # ==============================================================================
 
-# Executable file context declaration
-# type epdg_wod_exec, exec_type, vendor_file_type, file_type;
+# type epdg_wod, domain;
+type vendor_epdg_wod, domain;
+type vendor_epdg_wod_exec, exec_type, vendor_file_type, file_type;
 type wod_socket, file_type;
 
-# ==============================================================================
-# MediaTek Wi-Fi Offload Architecture (WoA) Networking & Tunnel Fixes
-# ==============================================================================
-
-# 1. Force permissive mode ONLY for this daemon to completely bypass network/file blocks
+# Force permissive mode for both target variants to guarantee execution
+permissive epdg_wod;
 permissive vendor_epdg_wod;
 
-# 2. Hardware Modem Channel Access
-allow vendor_epdg_wod ccci_device:chr_file rw_file_perms;
+# Assign official Android Network Stack macro privileges to both domain states
+typeattribute epdg_wod netdomain;
+typeattribute vendor_epdg_wod netdomain;
 
-# 3. Core DNS & Socket Creation Permissions
-allow vendor_epdg_wod self:udp_socket create_socket_perms;
-allow vendor_epdg_wod self:tcp_socket create_socket_perms;
+# ==============================================================================
+# Core Process Transitions & Execution Logic
+# ==============================================================================
 
-# NOTE: Direct system_file read removed here to bypass CTS Neverallow Rule 1266.
-# Permissive mode above will safely bypass this block at runtime.
-allow vendor_epdg_wod vendor_file:file rx_file_perms;
+init_daemon_domain(vendor_epdg_wod)
 
-
-# Allow epdg_wod to safely manage and communicate with the ccci modem channels
-allow vendor_epdg_wod ccci_device:chr_file rw_file_perms;
-
-# --- Process Management (StrongSwan/VPN Tunnel Subprocesses) ---
-allow epdg_wod { starter_exec charon_exec stroke_exec ipsec_exec }:file { rx_file_perms lock execute_no_trans };
-allow epdg_wod ipsec:process { transition sigkill signull signal siginh rlimitinh };
-dontaudit epdg_wod ipsec:process noatsecure;
-allow ipsec epdg_wod:process sigchld;
-
-# --- Network & Tunneling (The Core of VoWiFi) ---
-allow epdg_wod self:tun_socket { create relabelfrom relabelto };
-allow epdg_wod tun_device:chr_file { ioctl read write getattr open };
-
-# Routing and Security Association Policies (XFRM Engine)
-allow epdg_wod self:netlink_route_socket { read write create getattr bind setopt nlmsg_read nlmsg_write };
-allow epdg_wod self:netlink_xfrm_socket { read write create getattr bind setopt nlmsg_write };
-
-# Data Packet Management Sockets
-allow epdg_wod self:udp_socket { ioctl create node_bind setopt };
-allow epdg_wod self:rawip_socket { create getopt setopt };
-allowxperm epdg_wod self:udp_socket ioctl { 0x8914 0x8916 0x8922 };
-
-# --- Internal Communication Framework ---
-allow epdg_wod netd_socket:sock_file write;
-unix_socket_connect(epdg_wod, netd, netd)
-allow netd epdg_wod:fd use;
-allow netd epdg_wod:{ tcp_socket udp_socket } { read write getopt setopt };
-
-# IPC with the running IPsec negotiation process
-allow ipsec epdg_wod:unix_stream_socket { read write connectto };
-allow ipsec epdg_wod:fd use;
-
-# --- Linux Capabilities & System Settings ---
-allow epdg_wod self:capability { kill net_admin net_raw sys_module };
-
-# Framework State Property Toggles
-set_prop(epdg_wod, vendor_mtk_wod_prop)
-set_prop(epdg_wod, vendor_mtk_persist_wod_prop)
-
-# --- Storage & Filesystem Handshakes ---
-allow epdg_wod { wod_apn_conf_file wod_ipsec_conf_file }:dir create_dir_perms;
-allow epdg_wod { wod_apn_conf_file wod_ipsec_conf_file }:file create_file_perms;
-
-# Deep Hardware cross-talk with the MediaTek Modem
-allow epdg_wod ccci_device:chr_file { ioctl read write open };
-
-
-
-# --- Helper Utilities (FIXED: Safe Domain Transition) ---
-allow vendor_epdg_wod netutils_wrapper_exec:file { read getattr map open };
-domain_auto_trans(vendor_epdg_wod, netutils_wrapper_exec, netutils_wrapper)
+# Allow executing network helper tools and switching contexts properly
+allow { epdg_wod vendor_epdg_wod } netutils_wrapper_exec:file { read getattr map open };
+domain_auto_trans({ epdg_wod vendor_epdg_wod }, netutils_wrapper_exec, netutils_wrapper)
 
 # Fix the iptables-wrapper unix_stream_socket & fd denials
-allow netutils_wrapper vendor_epdg_wod:unix_stream_socket { read write };
-allow netutils_wrapper vendor_epdg_wod:fd use;
+allow netutils_wrapper { epdg_wod vendor_epdg_wod }:unix_stream_socket { read write };
+allow netutils_wrapper { epdg_wod vendor_epdg_wod }:fd use;
+
+# Allow running IPsec tunnel orchestration components directly without switching contexts
+allow { epdg_wod vendor_epdg_wod } { starter_exec charon_exec stroke_exec ipsec_exec vendor_charon_exec }:file { rx_file_perms lock execute_no_trans open read getattr map };
+allow { epdg_wod vendor_epdg_wod } ipsec:process { transition sigkill signull signal siginh rlimitinh };
+dontaudit { epdg_wod vendor_epdg_wod } ipsec:process noatsecure;
+allow ipsec { epdg_wod vendor_epdg_wod }:process sigchld;
+
+# IPC with running IPsec negotiations
+allow ipsec { epdg_wod vendor_epdg_wod }:unix_stream_socket { read write connectto };
+allow ipsec { epdg_wod vendor_epdg_wod }:fd use;
+
+# ==============================================================================
+# Network & Tunneling (The Core of VoWiFi Interface Creation)
+# ==============================================================================
+
+# Linux capabilities needed to bring up network layers and handle low power/sleeping modes
+allow { epdg_wod vendor_epdg_wod } self:capability { kill net_admin net_raw sys_module sys_nice net_bind_service };
+allow { epdg_wod vendor_epdg_wod } self:capability2 { wake_alarm };
+
+# TUN Interface Allocation Rules
+allow { epdg_wod vendor_epdg_wod } tun_device:chr_file rw_file_perms;
+allowxperm { epdg_wod vendor_epdg_wod } tun_device:chr_file ioctl { TUNSETIFF TUNSETPERSIST };
+allow { epdg_wod vendor_epdg_wod } self:tun_socket { create relabelfrom relabelto create_socket_perms_no_ioctl };
+
+# Routing and Transformation Engine Sockets (XFRM Engine)
+allow { epdg_wod vendor_epdg_wod } self:netlink_route_socket { create bind read write nlmsg_read nlmsg_readpriv getattr setopt };
+allow { epdg_wod vendor_epdg_wod } self:netlink_xfrm_socket { create bind read write nlmsg_read nlmsg_write getattr setopt };
+
+# Data Packet Sockets & Framework Control Engine
+allow { epdg_wod vendor_epdg_wod } self:udp_socket { create ioctl node_bind setopt create_socket_perms };
+allow { epdg_wod vendor_epdg_wod } self:tcp_socket create_socket_perms;
+allow { epdg_wod vendor_epdg_wod } self:rawip_socket { create getopt setopt };
+
+# Network ioctl mappings for IP configuration mapping
+allowxperm { epdg_wod vendor_epdg_wod } self:udp_socket ioctl { SIOCGIFADDR SIOCGIFNETMASK SIOCGIFHWADDR 0x8914 0x8916 0x8922 };
+
+# Netd Framework DNS Hook Handshake
+allow { epdg_wod vendor_epdg_wod } netd_socket:sock_file write;
+allow { epdg_wod vendor_epdg_wod } dnsproxyd_socket:sock_file write;
+unix_socket_connect({ epdg_wod vendor_epdg_wod }, netd, netd)
+allow netd { epdg_wod vendor_epdg_wod }:fd use;
+allow netd { epdg_wod vendor_epdg_wod }:{ tcp_socket udp_socket } { read write getopt setopt };
+
+# Cross-talk handshakes with Native IMS components / System Domains (CRITICAL OLD RULE)
+allow vendor_init { epdg_wod vendor_epdg_wod }:fd use;
+allow domain { epdg_wod vendor_epdg_wod }:fd use;
+
+# ==============================================================================
+# Filesystem, Storage & Hardware Interconnects
+# ==============================================================================
+
+# Hardware Modem Channels & RILD Cross-Core communication Sync
+allow { epdg_wod vendor_epdg_wod } ccci_device:chr_file { ioctl read write open };
+allow { epdg_wod vendor_epdg_wod } rild:unix_stream_socket connectto;
+allow rild { epdg_wod vendor_epdg_wod }:fd use;
+allow rild { epdg_wod vendor_epdg_wod }:unix_stream_socket { read write };
+
+# Configuration folder and control socket permissions (Charon files, APN mapping data)
+allow { epdg_wod vendor_epdg_wod } wod_socket:sock_file create_file_perms;
+allow { epdg_wod vendor_epdg_wod } wod_socket:dir create_dir_perms;
+allow { epdg_wod vendor_epdg_wod } { wod_apn_conf_file wod_ipsec_conf_file }:dir { create_dir_perms search write add_name remove_name read open };
+allow { epdg_wod vendor_epdg_wod } { wod_apn_conf_file wod_ipsec_conf_file }:file { create_file_perms create write open read getattr unlink ioctl };
+allow { epdg_wod vendor_epdg_wod } wod_ipsec_conf_file:sock_file { create write setattr unlink open };
+
+# Read configurations out of general layout locations
+allow { epdg_wod vendor_epdg_wod } vendor_file:file rx_file_perms;
+allow { epdg_wod vendor_epdg_wod } vendor_configs_file:file { read open getattr ioctl };
+allowxperm { epdg_wod vendor_epdg_wod } { vendor_configs_file wod_ipsec_conf_file wod_apn_conf_file }:file ioctl 0x5401;
+
+# Kernel configuration status parameters
+allow { epdg_wod vendor_epdg_wod } proc_net:file { write open getattr };
+allow { epdg_wod vendor_epdg_wod } proc_modules:file { getattr open read };
+
+# System Properties Setup
+set_prop({ epdg_wod vendor_epdg_wod }, vendor_mtk_wod_prop)
+set_prop({ epdg_wod vendor_epdg_wod }, vendor_mtk_persist_wod_prop)
 
 
 
-# --- VoWiFi Handshake Fallback Alignment ---
-# Allow general vendor domains (including the native IMS binaries) to interact 
-# with the file descriptors and network sockets established by epdg_wod
-allow vendor_init epdg_wod:fd use;
-allow domain epdg_wod:fd use;
+# Ensure the script file can act as the entrypoint for this domain
+allow { epdg_wod vendor_epdg_wod } vendor_epdg_wod_exec:file { rx_file_perms map entrypoint };
+
+# Execution & Shell tools capabilities
+allow { epdg_wod vendor_epdg_wod } vendor_shell_exec:file { rx_file_perms map };
+allow { epdg_wod vendor_epdg_wod } vendor_toolbox_exec:file { rx_file_perms execute execute_no_trans map };
+
+# Sockets and Netlink permissions to avoid the AVC Denied blocks
+allow { epdg_wod vendor_epdg_wod } self:capability { net_admin net_raw };
+allow { epdg_wod vendor_epdg_wod } self:netlink_route_socket { create bind read write nlmsg_read nlmsg_readpriv nlmsg_write };
+allow { epdg_wod vendor_epdg_wod } self:netlink_xfrm_socket { create bind read write nlmsg_read nlmsg_write };
+allow { epdg_wod vendor_epdg_wod } self:udp_socket { create ioctl };
+allowxperm { epdg_wod vendor_epdg_wod } self:udp_socket ioctl { SIOCSIFMTU SIOCGIFMTU };

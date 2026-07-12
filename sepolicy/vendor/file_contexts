@@ -124,3 +124,7 @@
 # /dev/socket/rild                        u:object_r:rild_socket:s0
 # /dev/socket/rild-atci                   u:object_r:rild_socket:s0
 /dev/socket/wod                         u:object_r:wod_socket:s0
+
+
+
+/vendor/bin/init\.wod\.sh    u:object_r:vendor_epdg_wod_exec:s0

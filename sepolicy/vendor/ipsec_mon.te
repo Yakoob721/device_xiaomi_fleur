@@ -1,0 +1,16 @@
+# Force the ipsec_mon domain into Permissive Mode for debugging
+permissive ipsec_mon;
+
+# Allow ipsec_mon to run as root and utilize low-level network controls
+allow ipsec_mon self:capability { net_admin net_raw setuid setgid };
+
+# Allow managing routing sockets and XFRM processing
+allow ipsec_mon self:netlink_route_socket { create bind read write nlmsg_read nlmsg_write };
+allow ipsec_mon self:netlink_xfrm_socket { create bind read write nlmsg_read nlmsg_write };
+
+# Allow modifying socket parameters for tunnel setup
+allow ipsec_mon self:udp_socket { create ioctl read write };
+allowxperm ipsec_mon self:udp_socket ioctl { SIOCSIFMTU SIOCGIFMTU };
+
+# Crucial additions for MTK architecture interactions
+allow ipsec_mon netd:netlink_kobject_uevent_socket { read write };

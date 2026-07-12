@@ -415,3 +415,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Copy the entire ipsec.d directory (configs and certificates)
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,device/xiaomi/fleur/ipsec.d,$(TARGET_COPY_OUT_VENDOR)/etc/ipsec/ipsec.d)
+
+persist.vendor.audio.vowifi_offload.enable=0
+vendor.audio.feature.vowifi.hardware.offload=false
+persist.sys.voip.pms.enable=0
+
+PRODUCT_COPY_FILES += \
+    device/xiaomi/fleur/init.wod.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.wod.sh

@@ -1,8 +1,18 @@
 on post-fs-data
+    # Force the dual-stack property right as the ePDG directories are made
+    setprop persist.vendor.net.epdg.ip_version 46
+
     exec rm -f /data/vendor/ipsec/wo
     mkdir /data/vendor/ipsec 0770 system system
     mkdir /data/vendor/ipsec/wo 0770 system system
     mkdir /dev/vendor/net/ 0770 system system
+    
+    # Virtual tunnel device node allocation mapping
+    mkdir /dev/net 0775 system root
+    chown system vpn /dev/tun
+    chmod 0660 /dev/tun
+    symlink /dev/tun /dev/net/tun
+
     chown system /data/vendor/ipsec/wo_apn.conf
     chown system /data/vendor/ipsec/charon.ctl
     chown system /data/vendor/ipsec/charon.pid
@@ -32,11 +42,22 @@ on property:ro.vendor.md_apps.load_type=user && property:init.svc.vendor.epdg_wo
     setprop vendor.ril.mux.report.case 2
     setprop vendor.ril.muxreport 1
 
-service vendor.epdg_wod /vendor/bin/epdg_wod
+service vendor.epdg_wod /vendor/bin/epdg_wod -i wo0 -s ccmni0
     class late_start
     socket wod_action stream 660 system system
     socket wod_sim    stream 660 system system
     user system
-    group system shell log inet radio net_admin
+    group system shell log inet radio net_admin net_raw
     capabilities NET_RAW NET_ADMIN WAKE_ALARM CHOWN KILL NET_BIND_SERVICE
     disabled
+
+service vendor_init_wod /vendor/bin/init.wod.sh
+    class main
+    user root
+    group root net_admin net_raw
+    seclabel u:r:vendor_epdg_wod:s0
+    disabled
+    oneshot
+
+on property:init.svc.vendor.epdg_wod=running
+    start vendor_init_wod

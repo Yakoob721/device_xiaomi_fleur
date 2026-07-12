@@ -4,8 +4,6 @@
 type vendor_charon, domain;
 type vendor_charon_exec, exec_type, vendor_file_type, file_type;
 
-type vendor_epdg_wod, domain;
-type vendor_epdg_wod_exec, exec_type, vendor_file_type, file_type;
 
 # =========================================================
 # 2. Attribute Assignments (Fixed for Duplicate Declaration)
@@ -23,7 +21,6 @@ typeattribute wod_ipsec_conf_file data_file_type;
 # 3. Domain Transitions
 # =========================================================
 init_daemon_domain(vendor_charon)
-init_daemon_domain(vendor_epdg_wod)
 
 # =========================================================
 # 4. Global Shared Rules

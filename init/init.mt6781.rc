@@ -899,3 +899,9 @@ service wfca /vendor/bin/hw/wfca
     # Add these two lines to grant high-level networking/power permissions:
     capabilities NET_ADMIN NET_RAW BLOCK_SUSPEND
     
+
+# Force global forwarding tracking updates on boot completion
+on property:sys.boot_completed=1
+    write /proc/sys/net/ipv4/ip_forward 1
+    write /proc/sys/net/ipv6/conf/all/forwarding 1
+    write /proc/sys/net/ipv6/conf/default/forwarding 1

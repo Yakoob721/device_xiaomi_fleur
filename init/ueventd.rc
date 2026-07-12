@@ -35,6 +35,7 @@
 /dev/stpwmt               0660   system     system
 /dev/wmtdetect            0660   system     system
 /dev/fw_log_wmt           0660   system     system
+/dev/tun                  0660   system     vpn
 
 # BT
 /dev/stpbt                0660   bluetooth  bluetooth

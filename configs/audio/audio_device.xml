@@ -1171,6 +1171,20 @@
             <kctl name="PGA L Mux" value="None" />
             <kctl name="PGA R Mux" value="None" />
         </path>
+        <path name="Audio_PGA1_Setting" value="setting">
+            <kctl name="PGA L Mux" value="AIN0" />
+            <kctl name="PGA R Mux" value="AIN0" />
+        </path>
+        
+        <path name="Audio_PGA2_Setting" value="setting">
+            <kctl name="PGA L Mux" value="AIN2" />
+            <kctl name="PGA R Mux" value="AIN2" />
+        </path>
+        
+        <path name="Audio_PGA3_Setting" value="setting">
+            <kctl name="PGA L Mux" value="AIN1" />
+            <kctl name="PGA R Mux" value="AIN1" />
+        </path>
         <path name="MD1_TO_CAPTURE2" value="turnon">
             <kctl name="UL2_CH1 PCM_2_CAP_CH1" value="1" />
             <kctl name="UL2_CH2 PCM_2_CAP_CH1" value="1" />

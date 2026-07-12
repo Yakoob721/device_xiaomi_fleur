@@ -39,4 +39,3 @@ vendor.mtk.wod.                 u:object_r:vendor_mtk_wod_prop:s0
 persist.vendor.mtk.wod.         u:object_r:vendor_mtk_persist_wod_prop:s0
 
 
-

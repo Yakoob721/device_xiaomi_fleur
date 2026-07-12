@@ -415,5 +415,6 @@
     <integer name="config_longAnimTime">450</integer>
     
     <bool name="config_speed_up_audio_on_touch">true</bool>
-
+    
+ 
 </resources>

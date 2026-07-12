@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <carrier_config_list>
     <carrier_config>
-    	<boolean name="config_iwlan_networks_allowed_while_untrusted" value="true" />
-		<boolean name="config_wfc_data_roaming_is_untrusted_allowed" value="true" />
+        <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="carrier_wfc_supports_wifi_only_bool" value="true" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" /> 
+        <boolean name="wfc_carrier_rcs_available_bool" value="true" />
+        
+        <boolean name="config_iwlan_networks_allowed_while_untrusted" value="true" />
+        <boolean name="config_wfc_data_roaming_is_untrusted_allowed" value="true" />
         <boolean name="carrier_volte_available_bool" value="true" />
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -68,6 +73,11 @@
         <boolean name="config_wfc_disable_sa" value="false" />
         <boolean name="config_update_service_status" value="false" />
         <boolean name="config_vonr_on_by_defalut_bool" value="false" />
+        
+        <boolean name="mtk_carrier_wfc_audio_offload_enable_bool" value="false" />
+        <boolean name="carrier_wfc_audio_hardware_offload_available_bool" value="false" />
+        <int name="wfc_audio_codec_priority_mode_int" value="0" />
+        <int name="carrier_vowifi_mtu_int" value="1350" />
     </carrier_config>
 
     <carrier_config mcc="404">
@@ -145,6 +155,21 @@
         <boolean name="hide_wfc_mode_option" value="false" />
         <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
         <boolean name="mtk_carrier_wfc_get_location_always" value="true" />
+    </carrier_config>
+
+    <carrier_config mcc="404" mnc="09">
+        <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
+        <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="true" />
+        <boolean name="hide_wfc_mode_option" value="false" />
+        <boolean name="show_merge_button_on_conference_participant" value="true" />
+        <boolean name="mtk_carrier_wfc_get_location_always" value="true" />
+        <int name="ims_conference_size_limit_int" value="9" />
+        <string-array name="carrier_iwlan_ims_available_ip_types_int_array" num="2">
+            <item value="1" />
+            <item value="2" />
+        </string-array>
     </carrier_config>
 
 </carrier_config_list>
