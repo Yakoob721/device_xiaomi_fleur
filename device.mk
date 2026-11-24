@@ -271,6 +271,12 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     NcmTetheringOverlay
+    
+# Overlays
+PRODUCT_PACKAGE_OVERLAYS += \
+    $(DEVICE_PATH)/rro_overlay
+
+
 
 # Power-off Alarm
 PRODUCT_PACKAGES += \
